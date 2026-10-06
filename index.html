@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f4f0">
+  <title>Turno — Agenda de barbería</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="#" aria-label="Turno, inicio"><span class="brand-mark">t.</span><span>turno<span class="brand-period">.</span></span></a>
+      <div class="shop-switch"><span class="shop-avatar">B</span><span class="shop-copy"><b>Barbería</b><small>Panel de administración</small></span><span class="chevron">⌄</span></div>
+      <div class="nav-label">MENÚ</div>
+      <nav class="nav-list" aria-label="Navegación principal">
+        <button class="nav-item active" data-view="agenda"><span class="nav-icon">▦</span>Agenda <span class="nav-count" id="navCount">0</span></button>
+        <button class="nav-item" data-view="services"><span class="nav-icon">✂</span>Servicios</button>
+      </nav>
+      <div class="sidebar-bottom"><div class="whatsapp-status"><span class="status-dot"></span><span><b>WhatsApp</b><small>Modo de prueba</small></span><span class="test-tag">DEMO</span></div><div class="profile"><div class="profile-avatar">D</div><span><b>Dueño</b><small>Administrador</small></span><span class="chevron">···</span></div></div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar"><div class="breadcrumb">Barbería <span>/</span> <b id="pageName">Agenda</b></div><div class="top-actions"><label class="role-switch"><span>Vista de</span><select id="roleSelect" aria-label="Cambiar tipo de acceso"><option value="owner">Dueño</option><option value="viewer">Solo lectura</option></select></label><button class="icon-button" id="helpButton" title="Acerca de esta demo" aria-label="Ayuda">?</button><div class="profile-avatar small-avatar">D</div></div></header>
+      <section class="view active" id="agendaView">
+        <div class="page-heading"><div><p class="eyebrow" id="todayLabel">AGENDA DEL DÍA</p><h1>Tu día, en orden.</h1><p class="subheading">Revisá los turnos y organizá el trabajo de cada barbero.</p></div><button class="primary-button owner-only" id="newAppointment"><span>＋</span> Nuevo turno</button></div>
+        <div class="stat-grid"><article class="stat-card"><div class="stat-top"><span>Turnos de hoy</span><span class="stat-icon lilac">▦</span></div><strong id="statAppointments">0</strong><small>en todos los barberos</small></article><article class="stat-card"><div class="stat-top"><span>Ingresos estimados</span><span class="stat-icon green">$</span></div><strong id="statRevenue">$0</strong><small>según servicios agendados</small></article><article class="stat-card"><div class="stat-top"><span>Próximo turno</span><span class="stat-icon orange">◷</span></div><strong class="next-time" id="statNext">—</strong><small id="statNextMeta">No hay próximos turnos</small></article></div>
+        <div class="agenda-toolbar"><div class="date-control"><button class="date-arrow" id="prevDay" aria-label="Día anterior">‹</button><button class="date-current" id="datePickerButton"><span class="calendar-icon">▦</span><span id="dateLabel"></span><span class="down-arrow">⌄</span></button><input type="date" id="datePicker" aria-label="Elegir fecha"><button class="date-arrow" id="nextDay" aria-label="Día siguiente">›</button><button class="today-button" id="todayButton">Hoy</button></div><div class="toolbar-actions"><label class="search-box"><span>⌕</span><input id="searchInput" type="search" placeholder="Buscar cliente…" aria-label="Buscar cliente"></label><button class="secondary-button" id="exportButton"><span>↓</span> Exportar</button><button class="secondary-button print-button" id="printButton"><span>▤</span> Imprimir</button></div></div>
+        <div class="barber-tabs" id="barberTabs"><button class="barber-tab active" data-barber="all">Todos <span id="allCount">0</span></button><button class="barber-tab" data-barber="barbero 1"><i class="barber-dot dot-lilac"></i>Barbero 1</button><button class="barber-tab" data-barber="barbero 2"><i class="barber-dot dot-orange"></i>Barbero 2</button><button class="barber-tab" data-barber="barbero 3"><i class="barber-dot dot-green"></i>Barbero 3</button></div>
+        <section class="schedule-card"><div class="schedule-head"><div><b>Agenda</b><span id="scheduleDate"></span></div><span class="timezone">ART · Buenos Aires</span></div><div class="schedule-body" id="scheduleBody"></div><div class="empty-state hidden" id="emptyState"><div class="empty-icon">▦</div><b>No hay turnos para este día</b><p>Cuando se agende un turno, va a aparecer acá.</p><button class="text-button owner-only" id="emptyNew">＋ Agregar turno</button></div></section>
+        <p class="demo-note"><span>✦</span> Vista previa interactiva · Los cambios se guardan en este dispositivo.</p>
+      </section>
+
+      <section class="view" id="servicesView"><div class="page-heading"><div><p class="eyebrow">CONFIGURACIÓN</p><h1>Servicios y precios</h1><p class="subheading">Estos valores se usan para calcular la duración y el total de cada turno.</p></div><button class="primary-button owner-only" id="addService"><span>＋</span> Agregar servicio</button></div><div class="service-summary"><span class="summary-mark">✂</span><div><b>Tu menú de servicios</b><small>Los cambios se aplican a los próximos turnos.</small></div><span class="service-total" id="serviceTotal"></span></div><div class="service-list" id="serviceList"></div><p class="demo-note"><span>✦</span> Podés editar estos datos desde el panel del dueño.</p></section>
+    </main>
+  </div>
+
+  <dialog id="appointmentDialog" class="modal"><form id="appointmentForm"><div class="modal-heading"><div><p class="eyebrow">NUEVO TURNO</p><h2>Agendá una visita</h2></div><button type="button" class="close-button" data-close="appointmentDialog" aria-label="Cerrar">×</button></div><p class="modal-intro">En esta demo, el sistema asigna automáticamente al primer barbero disponible.</p><label class="field-label">Nombre del cliente<input name="client" required placeholder="Ej. Martina López"></label><label class="field-label">Servicio<select name="service" id="bookingService" required></select></label><div class="field-row"><label class="field-label">Día<input name="date" id="bookingDate" type="date" required></label><label class="field-label">Horario<select name="time" id="bookingTime" required></select></label></div><label class="field-label">Teléfono <span class="optional">opcional en carga manual</span><input name="phone" placeholder="+54 9 …"></label><p class="form-message" id="bookingMessage" role="status"></p><div class="modal-footer"><button type="button" class="secondary-button" data-close="appointmentDialog">Cancelar</button><button type="submit" class="primary-button">Confirmar turno</button></div></form></dialog>
+  <dialog id="serviceDialog" class="modal"><form id="serviceForm"><div class="modal-heading"><div><p class="eyebrow">MENÚ DE SERVICIOS</p><h2 id="serviceDialogTitle">Agregar servicio</h2></div><button type="button" class="close-button" data-close="serviceDialog" aria-label="Cerrar">×</button></div><input type="hidden" name="id"><label class="field-label">Nombre<input name="name" required placeholder="Ej. Corte clásico"></label><div class="field-row"><label class="field-label">Duración<select name="duration"><option value="20">20 minutos</option><option value="30">30 minutos</option><option value="50">50 minutos</option><option value="70">70 minutos</option><option value="90">90 minutos</option></select></label><label class="field-label">Precio (ARS)<input name="price" type="number" min="0" step="500" required placeholder="15000"></label></div><div class="modal-footer"><button type="button" class="secondary-button" data-close="serviceDialog">Cancelar</button><button type="submit" class="primary-button">Guardar servicio</button></div></form></dialog>
+  <dialog id="infoDialog" class="modal compact-modal"><button type="button" class="close-button float-close" data-close="infoDialog" aria-label="Cerrar">×</button><div class="info-symbol">✦</div><h2>Vista previa de Turno</h2><p>Esta versión funciona en tu navegador con datos de demostración. Las reservas, los servicios y los precios se guardan en este dispositivo.</p><div class="info-list"><span>✓ Agenda y filtros por barbero</span><span>✓ Alta de turnos con disponibilidad</span><span>✓ Edición de servicios y precios</span><span>✓ Descarga e impresión de agenda</span><span class="pending">◷ WhatsApp y recordatorios: falta conectar n8n y Meta</span><span class="pending">◷ Sincronización entre dispositivos: requiere alojamiento</span></div><button class="primary-button full-button" data-close="infoDialog">Entendido</button></dialog>
+  <div class="toast" id="toast" role="status"></div>
+  <script src="app.js"></script>
+</body>
+</html>
